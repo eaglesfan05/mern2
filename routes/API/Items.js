@@ -8,7 +8,7 @@ const Item = require('../../models/Items');
 // @desc GET All items
 // @access public
 
-router.get('/items', (req,res) => {
+router.get('/', (req,res) => {
     Item.find()
         .sort({ date: -1 })
         .then(items => res.json(items))
@@ -18,7 +18,7 @@ router.get('/items', (req,res) => {
 // @desc Create a Poste
 // @access public
 
-router.post('/items', (req,res) => {
+router.post('/', (req,res) => {
     const newItem = new Item({
         name: req.body.name
     })
@@ -30,7 +30,7 @@ router.post('/items', (req,res) => {
 // @desc Delete an Item
 // @access public
 
-router.delete('/items/:id', (req,res) => {
+router.delete('/:id', (req,res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({success: true}))
         )
