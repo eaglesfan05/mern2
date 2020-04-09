@@ -19,7 +19,7 @@ mongoose.connect(db)
 
 
 //anything that goes to route refers to items variable
-app.use('/api', items)
+app.use('/api/items', items)
 
 //server static assets(aka build folder) if in production
 if(process.env.NODE_ENV === 'production') {
