@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const items = require('../routes/API/Items')
+const items = require('./routes/API/Items')
 const app = express();
 
 //bodyparser middleware//
 app.use(bodyParser.json());
 
 //db config//
-const db = require('../config/db').mongoURI;
+const db = require('./config/db').mongoURI;
 
 //connect to mongo//
 mongoose.connect(db)
