@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const items = require('./routes/API/Items')
 const app = express();
 
 //bodyparser middleware//
@@ -13,13 +12,16 @@ app.use(bodyParser.json());
 const db = require('./config/db').mongoURI;
 
 //connect to mongo//
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
 
 //anything that goes to route refers to items variable
-app.use('/api/items', items)
+app.use('/api/items', require('./routes/API/Items'))
+//user routes
+app.use('/api/user', require('./routes/API/users'))
+
 
 //server static assets(aka build folder) if in production
 if(process.env.NODE_ENV === 'production') {
