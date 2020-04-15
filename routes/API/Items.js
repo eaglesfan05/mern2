@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+//to protect routes pass auth as second param in end points
+const auth = require('../../middleware/auth')
 
 //bring in model//
 const Item = require('../../models/Items');
@@ -18,7 +20,7 @@ router.get('/', (req,res) => {
 // @desc Create a Poste
 // @access public
 
-router.post('/', (req,res) => {
+router.post('/', auth, (req,res) => {
     const newItem = new Item({
         name: req.body.name
     })
@@ -28,9 +30,9 @@ router.post('/', (req,res) => {
 
 // @route DELETE api/items/:id
 // @desc Delete an Item
-// @access public
+// @access private
 
-router.delete('/:id', (req,res) => {
+router.delete('/:id', auth, (req,res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({success: true}))
         )

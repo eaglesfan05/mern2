@@ -1,15 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const path = require('path');
+const config = require('config')
 
 const app = express();
 
-//bodyparser middleware//
-app.use(bodyParser.json());
+//express middleware//
+app.use(express.json());
 
 //db config//
-const db = require('./config/db').mongoURI;
+const db = config.get('mongoURI');
 
 //connect to mongo//
 mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
@@ -20,7 +20,12 @@ mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
 //anything that goes to route refers to items variable
 app.use('/api/items', require('./routes/API/Items'))
 //user routes
-app.use('/api/user', require('./routes/API/users'))
+//Registration
+app.use('/api/users', require('./routes/API/users'))
+//login
+app.use('/api/auth', require('./routes/API/auth'))
+
+app.use('/api/auth/user', require('./routes/API/login'))
 
 
 //server static assets(aka build folder) if in production
